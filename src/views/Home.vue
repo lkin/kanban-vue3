@@ -1,18 +1,28 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <h3 v-if="!auth">You are not logged in</h3>
+  <KanbanBoard v-if="auth"/>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script>
+import { useStore } from 'vuex'
+import { computed } from 'vue'
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
-});
+import KanbanBoard from '../components/KanbanBoard'
+
+export default {
+    name: "Home",
+    setup() {
+        const store = useStore();
+        const auth = computed(() => store.state.authenticated)
+
+        return {
+            auth
+        }
+    },
+    components: {KanbanBoard}
+}
 </script>
+
+<style>
+
+</style>
